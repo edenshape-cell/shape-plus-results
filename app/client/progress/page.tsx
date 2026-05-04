@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { weightProgress } from '@/lib/mock-data';
+import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
 
 const rows = [
   ['04.05.2026', '84.8 ק״ג', 'צוות', 'עומד בקצב'],
@@ -21,9 +23,19 @@ export default function ProgressPage() {
         <div className="tabs"><span className="pill active">משקל</span><span className="pill">הרכבי גוף</span><span className="pill">היקפים</span></div>
         <div className="filters"><span className="pill">חודש</span><span className="pill active">3 חודשים</span><span className="pill">6 חודשים</span><span className="pill">שנה</span></div>
         <div className="card">
-          <h3 className="card-title">משקל לאורך זמן</h3>
-          <div className="mini-chart"><div className="bar" style={{height:170}}/><div className="bar target" style={{height:158}}/><div className="bar" style={{height:138}}/><div className="bar target" style={{height:126}}/><div className="bar" style={{height:105}}/></div>
-          <div className="row" style={{marginTop:12}}><span>בפועל</span><span>קצב יעד</span></div>
+          <div className="row"><h3 className="card-title" style={{margin:0}}>משקל לאורך זמן</h3><span className="badge gray">בפועל מול יעד</span></div>
+          <div className="chart-wrap">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={weightProgress} margin={{ top: 20, right: 10, left: 0, bottom: 5 }}>
+                <XAxis dataKey="label" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
+                <YAxis domain={[78, 92]} tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
+                <Tooltip />
+                <Line type="monotone" dataKey="target" stroke="#111111" strokeDasharray="5 5" strokeWidth={2} dot={false} name="קצב יעד" />
+                <Line type="monotone" dataKey="actual" stroke="#e11d2e" strokeWidth={4} dot={{ r: 4 }} name="בפועל" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="row" style={{marginTop:8}}><span><span className="source-dot client" /> בפועל</span><span><span className="source-dot staff" /> קצב יעד</span></div>
         </div>
         <h2 className="card-title">היסטוריית מדידות</h2>
         {rows.map((row) => (
