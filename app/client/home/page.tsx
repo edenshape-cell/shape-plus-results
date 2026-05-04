@@ -1,5 +1,6 @@
-import { client } from '@/lib/mock-data';
+import { client, weightProgress } from '@/lib/mock-data';
 import Link from 'next/link';
+import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
 
 export default function ClientHomePage() {
   return (
@@ -16,8 +17,8 @@ export default function ClientHomePage() {
         <div className="goal-card">
           <div className="goal-top">
             <div>
-              <p className="muted" style={{ color: '#bcbcbc', margin: 0 }}>היעד שלך</p>
-              <h2 style={{ fontSize: 32, margin: '8px 0 0' }}>{client.targetWeight} ק״ג</h2>
+              <p style={{ color: '#bcbcbc', margin: 0 }}>היעד שלך</p>
+              <h2>{client.targetWeight} ק״ג</h2>
             </div>
             <span className="badge green">קצב {client.selectedPace}</span>
           </div>
@@ -33,18 +34,24 @@ export default function ClientHomePage() {
         </div>
 
         <div className="card">
-          <h3 className="card-title">ההתקדמות שלי</h3>
-          <div className="mini-chart">
-            <div className="bar" style={{ height: 150 }} />
-            <div className="bar target" style={{ height: 142 }} />
-            <div className="bar" style={{ height: 126 }} />
-            <div className="bar target" style={{ height: 118 }} />
-            <div className="bar" style={{ height: 104 }} />
-            <div className="bar target" style={{ height: 98 }} />
+          <div className="row">
+            <h3 className="card-title" style={{ margin: 0 }}>ההתקדמות שלי</h3>
+            <span className="badge gray">משקל</span>
           </div>
-          <div className="row" style={{ marginTop: 12 }}>
-            <span><span className="source-dot staff" /> בפועל</span>
-            <span><span className="source-dot client" /> קצב יעד</span>
+          <div className="chart-wrap">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={weightProgress} margin={{ top: 20, right: 10, left: 0, bottom: 5 }}>
+                <XAxis dataKey="label" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
+                <YAxis domain={[78, 92]} tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
+                <Tooltip />
+                <Line type="monotone" dataKey="target" stroke="#111111" strokeDasharray="5 5" strokeWidth={2} dot={false} name="קצב יעד" />
+                <Line type="monotone" dataKey="actual" stroke="#e11d2e" strokeWidth={4} dot={{ r: 4 }} name="בפועל" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="row" style={{ marginTop: 8 }}>
+            <span><span className="source-dot client" /> בפועל</span>
+            <span><span className="source-dot staff" /> קצב יעד</span>
           </div>
         </div>
 
