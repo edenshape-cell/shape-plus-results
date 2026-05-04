@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function LoginPage() {
   return (
     <main className="center-screen" dir="rtl">
@@ -13,7 +15,9 @@ export default function LoginPage() {
           <label>תעודת זהות / סיסמה</label>
           <input placeholder="הכנס סיסמה" type="password" />
         </div>
-        <button className="primary-btn">כניסה</button>
+        <Link href="/client/home" className="primary-btn" style={{ display: 'block', textAlign: 'center' }}>
+          כניסה
+        </Link>
         <p className="subtitle" style={{ fontSize: 13, marginBottom: 0 }}>
           הכניסה מתבצעת באמצעות טלפון ותעודת זהות
         </p>
