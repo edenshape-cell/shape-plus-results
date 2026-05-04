@@ -1,3 +1,5 @@
+"use client";
+
 import Link from 'next/link';
 import { weightProgress } from '@/lib/mock-data';
 import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
